@@ -1,9 +1,13 @@
 <template>
   <v-app>
-    <component :is="currentLayout" v-if="isRouterLoaded" >
-      <router-view> </router-view>
+    <component :is="currentLayout" v-if="isRouterLoaded">
+      <router-view v-slot="{ Component, route }">
+        <transition :name="route.meta.transition || 'fade'" mode="out-in">
+          <component :is="Component" :key="route.path" />
+        </transition>
+      </router-view>
     </component>
-    
+
     <RepaireCard />
     <CustomizationMenu />
     <BackToTop />
@@ -30,7 +34,6 @@ import { useAppStore } from "@/stores/appStore";
 const appStore = useAppStore();
 // live2d
 import Live2d from "@/components/Live2d.vue";
-import RepaireCard from "./components/RepaireCard.vue";
 import { useProfileStore } from "@/stores/profileStore";
 const customizeTheme = useCustomizeThemeStore();
 const route = useRoute();

@@ -7,15 +7,19 @@ export const routes = [
   {
     path: "/",
     redirect: "/dashboard",
-    meta: {},
+    meta: {
+      transition: "slide-fade",
+        //根路径重定向，通常不直接渲染，可不加动画
+    },
   } as any,
   {
     path: "/dashboard",
+    component: () => import("@/views/pages/DashBoard.vue"),
     meta: {
       requiresAuth: true,
       layout: "landing",
+      transition: "slide-fade", // 主要页面切换
     },
-    component: () => import("@/views/pages/DashBoard.vue"),
   },
   {
     path: "/dataCenter",
@@ -23,11 +27,11 @@ export const routes = [
     meta: {
       layout: "ui",
       title: "数据中心与可视化",
-      requiresAuth: true, // 需要登录
+      requiresAuth: true,
       hidePageHeader: true,
+      transition: "slide-fade",
     },
   },
-  // 新增的路由配置
   {
     path: "/herb-search",
     name: "herb-search",
@@ -37,6 +41,7 @@ export const routes = [
       title: "药材检索",
       requiresAuth: true,
       hidePageHeader: true,
+      transition: "slide-fade",
     },
   },
   {
@@ -45,8 +50,9 @@ export const routes = [
     meta: {
       layout: "ui",
       title: "数据采集",
-      requiresAuth: true, // 需要登录
+      requiresAuth: true,
       hidePageHeader: true,
+      transition: "slide-up", // 页面感觉像是从下方弹出的一个操作面板
     },
   },
   {
@@ -55,18 +61,9 @@ export const routes = [
     meta: {
       layout: "ui",
       title: "在线教育",
-      requiresAuth: true, // 需要登录
+      requiresAuth: true,
       hidePageHeader: true,
-    },
-  },
-  {
-    path: "/biomedicine/eduupload",
-    component: () => import("@/views/pages/biomedicine/EduUpload.vue"),
-    meta: {
-      layout: "ui",
-      title: "上传课程",
-      requiresAuth: true, // 需要登录
-      hidePageHeader: true,
+      transition: "slide-fade", // 用户的指定要求
     },
   },
   {
@@ -75,8 +72,20 @@ export const routes = [
     meta: {
       layout: "ui",
       title: "资源列表",
-      requiresAuth: false, // 不需要登录
+      requiresAuth: false,
       hidePageHeader: true,
+      transition: "slide-fade",
+    },
+  },
+  {
+    path: "/biomedicine/eduupload",
+    component: () => import("@/views/pages/biomedicine/EduUpload.vue"),
+    meta: {
+      layout: "ui",
+      title: "上传课程",
+      requiresAuth: true,
+      hidePageHeader: true,
+      transition: "slide-up",
     },
   },
   {
@@ -85,8 +94,9 @@ export const routes = [
     meta: {
       layout: "ui",
       title: "视频一览",
-      requiresAuth: false, // 不需要登录
+      requiresAuth: false,
       hidePageHeader: true,
+      transition: "slide-fade",
     },
   },
   {
@@ -95,8 +105,9 @@ export const routes = [
     meta: {
       layout: "ui",
       title: "视频详情",
-      requiresAuth: false, // 不需要登录
+      requiresAuth: false,
       hidePageHeader: true,
+      transition: "slide-up", // 从列表进入详情，向上滑动
     },
   },
   {
@@ -105,8 +116,9 @@ export const routes = [
     meta: {
       layout: "ui",
       title: "资源详情",
-      requiresAuth: false, // 不需要登录
+      requiresAuth: false,
       hidePageHeader: true,
+      transition: "slide-up", // 从列表进入详情，向上滑动
     },
   },
   {
@@ -115,20 +127,53 @@ export const routes = [
     meta: {
       layout: "ui",
       title: "学习计划",
-      requiresAuth: false, // 不需要登录
+      requiresAuth: false,
       hidePageHeader: true,
+      transition: "zoom-fade", // AI生成内容，使用缩放效果
     },
   },
-  //管理员
+  {
+    path: "/biomedicine/performance",
+    component: () => import("@/views/pages/biomedicine/Performance.vue"),
+    meta: {
+      layout: "ui",
+      title: "业绩展示",
+      requiresAuth: false,
+      hidePageHeader: true,
+      transition: "slide-fade",
+    },
+  },
+  {
+    path: "/LiveVideo",
+    component: () => import("@/views/pages/biomedicine/LiveKitClassroom.vue"),
+    meta: {
+      layout: "ui",
+      title: "直播课堂",
+      requiresAuth: true,
+      hidePageHeader: true,
+      transition: "zoom-fade", // 进入一个特殊的“房间”
+    },
+  },
+  {
+    path: "/herbs/edit/:id",
+    component: () => import("@/views/pages/biomedicine/HerbEditPage.vue"),
+    meta: {
+      layout: "ui",
+      title: "药材编辑",
+      requiresAuth: false,
+      hidePageHeader: true,
+      transition: "slide-up",
+    },
+  },
   {
     path: "/admin",
+    component: () => import("@/views/pages/Admin/AdministratorPanel.vue"),
     meta: {
       requiresAuth: true,
       layout: "landing",
+      transition: "zoom-fade", // 进入管理后台，使用缩放
     },
-    component: () => import("@/views/pages/Admin/AdministratorPanel.vue"),
   },
-  //富文本编辑器
   {
     path: "/newsEditor",
     component: () => import("@/views/pages/News/editor/RichTextEditorPage.vue"),
@@ -137,9 +182,9 @@ export const routes = [
       layout: "landing",
       category: "Data",
       title: "RichTextEditor",
+      transition: "slide-up",
     },
   },
-  //新闻列表
   {
     path: "/newsList",
     component: () => import("@/views/pages/News/editor/NewsListPage.vue"),
@@ -148,9 +193,9 @@ export const routes = [
       layout: "landing",
       category: "Data",
       title: "NewsList",
+      transition: "slide-fade",
     },
   },
-  //新闻详情页
   {
     path: "/newsDetail/:id",
     component: () => import("@/views/pages/News/editor/NewsDetailPage.vue"),
@@ -159,24 +204,27 @@ export const routes = [
       layout: "landing",
       category: "Data",
       title: "NewsDetail",
+      transition: "slide-up", // 从列表进入详情
     },
   },
   {
     path: "/myHouse",
+    component: () => import("@/views/pages/landlord/MyHouse.vue"),
     meta: {
       requiresAuth: true,
       layout: "landing",
+      transition: "slide-fade",
     },
-    component: () => import("@/views/pages/landlord/MyHouse.vue"),
   },
 
   {
     path: "/userManage",
+    component: () => import("@/views/pages/Admin/UserManagePage.vue"),
     meta: {
       requiresAuth: true,
       layout: "landing",
+      transition: "slide-fade",
     },
-    component: () => import("@/views/pages/Admin/UserManagePage.vue"),
   },
   {
     path: "/ai/chatbot_v1",
@@ -184,19 +232,17 @@ export const routes = [
     meta: {
       requiresAuth: true,
       layout: "landing",
-      // category: "AI",
       title: "ChatBotV1",
+      transition: "zoom-fade",
     },
   },
-  // image bot
   {
     path: "/image-bot",
     component: () => import("~/src/views/pages/ImageBot.vue"),
     meta: {
       requiresAuth: true,
       layout: "landing",
-      // category: "AI",
-      // title: "ImageBot",
+      transition: "zoom-fade",
     },
   },
   {
@@ -204,10 +250,11 @@ export const routes = [
     name: "plant-recognition",
     component: () => import("@/views/pages/recognition/PlantRecognitionPage.vue"),
     meta: {
-      layout: "ui", // 假设你使用 ui 布局
+      layout: "ui",
       title: "植物识别",
       requiresAuth: true,
       hidePageHeader: true,
+      transition: "zoom-fade", // 特殊工具页面
     },
   },
   {
@@ -220,6 +267,7 @@ export const routes = [
       layout: "ui",
       title: "Profile",
       category: "Config",
+      transition: "slide-up",
     },
   },
   {
@@ -227,8 +275,10 @@ export const routes = [
     name: "error",
     component: () =>
       import(/* webpackChunkName: "error" */ "@/views/errors/NotFoundPage.vue"),
+    meta: {
+      transition: "fade", // 错误页面使用最简单的淡入淡出
+    }
   },
-  // lottie Animation
   {
     path: "/ui/lottie-animation",
     name: "ui-lottie-animation",
@@ -241,23 +291,17 @@ export const routes = [
       layout: "ui",
       category: "UI",
       title: "LottieAnimation",
+      transition: "zoom-out",
     },
-
   },
   ...LandingRoutes,
   ...AuthRoutes,
-
-
 ];
-
 
 export const dynamicRoutes = [];
 
 const router = createRouter({
   history: createWebHistory(),
-  // hash模式：createWebHashHistory，history模式：createWebHistory
-  // process.env.NODE_ENV === "production"
-
   routes: routes,
   scrollBehavior(to, from, savedPosition) {
     if (savedPosition) {

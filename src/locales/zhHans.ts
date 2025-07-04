@@ -20,6 +20,12 @@ export default {
     noaccount: "还没有帐号？",
     create: "在此处创建一个",
     error: "电子邮件/密码组合无效",
+    welcome: "欢迎",
+    log_msg: "登录您的账户",
+    username: "用户名",
+    username1: "请输入用户名",
+    third_log: "使用第三方登录",
+    reg: "立即注册"
   },
   Phone: "手机号",
   register: {
@@ -31,10 +37,12 @@ export default {
     agree: "签署即表示您同意",
     account: "已经有帐号了？",
     signin: "登录",
+    welcome: "欢迎加入生物医药数字信息系统",
+    con_password: "确认密码"
   },
   menu: {
     search: "搜索（按“ Ctrl + /”进行聚焦）",
-    dashboard: "仪表板",
+    dashboard: "主页",
     logout: "登出",
     profile: "个人资料",
     blank: "空白页",
@@ -127,6 +135,31 @@ export default {
     voicebot: "语音对话助手",
     imagebot: "图像助手",
     chartbot: "图表助手",
+    dataCenter: "数据中心",
+    herb_search: "药材检索",
+    data_collection: "数据采集",
+    education: "在线教育",
+    performance: "业绩展示",
+    admin: "管理员界面",
+    newsEditor: "新闻编辑",
+    newsList: "新闻列表",
+    plant_recognition: "植物识别",
+    chatbot: "AI选购顾问",
+    main: "生物医药信息系统",
+    med_search: "搜索医药"
+  },
+  dataCenter: {
+    main: "中药材地理分布网络地图",
+    map_load: "地图加载中...",
+    med_dis: "药材地域分布 (玫瑰图)",
+    view_look: "查看图例",
+    comparison: "图谱比对",
+    click_mark: "点击地图上的标记点，可将该地点的药材图片填充至下方进行对比。",
+    click_lmark: "点击标记点选择左侧图片",
+    click_rmark: "点击标记点选择右侧图片",
+    data_ma: "数据溯源管理",
+    search: "搜索药材名、地址、指标等",
+    history: "暂无历史记录"
   },
   dashboard: {
     activity: "活动",

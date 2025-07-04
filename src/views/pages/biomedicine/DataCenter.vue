@@ -14,7 +14,7 @@
               class="mr-2"
               color="primary"
             >mdi-map-marker-radius</v-icon>
-            中药材地理分布网络地图
+            {{ t('dataCenter.main') }}
             <v-spacer></v-spacer>
             <v-chip
               v-if="weatherInfo"
@@ -41,7 +41,7 @@
                   indeterminate
                   color="primary"
                 ></v-progress-circular>
-                <div class="mt-2">地图加载中...</div>
+                <div class="mt-2">{{ t('dataCenter.map_load') }}</div>
               </div>
             </div>
           </v-card-text>
@@ -58,13 +58,13 @@
               class="mr-2"
               color="primary"
             >mdi-chart-pie</v-icon>
-            药材地域分布 (玫瑰图)
+            {{ t('dataCenter.med_dis') }}
             <v-spacer></v-spacer>
             <v-menu open-on-hover location="bottom end">
                 <template v-slot:activator="{ props }">
                     <v-btn v-bind="props" icon variant="text" color="grey-lighten-1">
                         <v-icon>mdi-information-outline</v-icon>
-                        <v-tooltip activator="parent" location="top">查看图例</v-tooltip>
+                        <v-tooltip activator="parent" location="top">{{ t('dataCenter.view_look') }}</v-tooltip>
                     </v-btn>
                 </template>
                 <v-sheet class="pa-2" elevation="6" rounded="lg">
@@ -93,57 +93,79 @@
       </v-col>
     </v-row>
 
-    <v-row class="mt-4">
+    <v-row class="mt-4 d-flex">
       <v-col
         cols="12"
         md="6"
       >
-        <v-card>
+        <v-card height="100%" class="d-flex flex-column">
           <v-card-title class="d-flex align-center">
             <v-icon
               class="mr-2"
               color="primary"
             >mdi-image-multiple</v-icon>
-            图谱比对
+            {{ t('dataCenter.comparison') }}
           </v-card-title>
           <v-divider></v-divider>
-          <v-card-text class="pa-4">
+          <v-card-text class="pa-4 flex-grow-1">
             <p class="text-body-2 text-grey-darken-2 mb-4">
-             点击地图上的标记点，可将该地点的药材图片填充至下方进行对比。
+             {{ t('dataCenter.click_mark') }}
             </p>
             <v-row>
               <v-col cols="6">
                 <v-card
                   variant="outlined"
-                  class="d-flex align-center justify-center fill-height comparison-image-card"
+                  class="comparison-image-card"
+                  height="250"
                   min-height="250"
+                  width="100%"
                   @click="clearImage(0)"
                 >
-                  <v-img v-if="comparisonImages[0]" :src="comparisonImages[0]" cover height="100%">
-                     <template v-slot:placeholder>
-                        <div class="d-flex align-center justify-center fill-height">
-                           <v-progress-circular color="grey-lighten-4" indeterminate></v-progress-circular>
+                  <div class="image-wrapper">
+                    <v-img
+                      v-if="comparisonImages[0]"
+                      :src="comparisonImages[0]"
+                      contain
+                      class="comparison-image"
+                    >
+                      <template v-slot:placeholder>
+                        <div class="placeholder">
+                          <v-progress-circular color="grey-lighten-4" indeterminate></v-progress-circular>
                         </div>
-                     </template>
-                  </v-img>
-                  <span v-else class="text-grey">点击标记点选择左侧图片</span>
+                      </template>
+                    </v-img>
+                    <div v-else class="placeholder">
+                      <span class="text-grey">{{ t('dataCenter.click_lmark') }}</span>
+                    </div>
+                  </div>
                 </v-card>
               </v-col>
               <v-col cols="6">
                 <v-card
                   variant="outlined"
-                  class="d-flex align-center justify-center fill-height comparison-image-card"
+                  class="comparison-image-card"
+                  height="250"
                   min-height="250"
-                   @click="clearImage(1)"
+                  width="100%"
+                  @click="clearImage(1)"
                 >
-                  <v-img v-if="comparisonImages[1]" :src="comparisonImages[1]" cover height="100%">
-                     <template v-slot:placeholder>
-                         <div class="d-flex align-center justify-center fill-height">
-                           <v-progress-circular color="grey-lighten-4" indeterminate></v-progress-circular>
+                  <div class="image-wrapper">
+                    <v-img
+                      v-if="comparisonImages[1]"
+                      :src="comparisonImages[1]"
+                      contain
+                      class="comparison-image"
+                    >
+                      <template v-slot:placeholder>
+                        <div class="placeholder">
+                          <v-progress-circular color="grey-lighten-4" indeterminate></v-progress-circular>
                         </div>
-                     </template>
-                  </v-img>
-                  <span v-else class="text-grey">点击标记点选择右侧图片</span>
+                      </template>
+                    </v-img>
+                    <div v-else class="placeholder">
+                      <span class="text-grey">{{ t('dataCenter.click_rmark') }}</span>
+                    </div>
+                  </div>
                 </v-card>
               </v-col>
             </v-row>
@@ -155,19 +177,19 @@
         cols="12"
         md="6"
       >
-        <v-card>
+        <v-card height="100%" class="d-flex flex-column">
           <v-card-title class="d-flex align-center">
             <v-icon
               class="mr-2"
               color="primary"
             >mdi-source-branch</v-icon>
-            数据溯源管理
+            {{ t('dataCenter.data_ma') }}
              <v-spacer></v-spacer>
              <v-text-field
                 v-model="historySearchQuery"
                 density="compact"
                 variant="outlined"
-                label="搜索药材名、地址、指标等"
+                :label="t('dataCenter.search')"
                 prepend-inner-icon="mdi-magnify"
                 single-line
                 hide-details
@@ -176,7 +198,7 @@
             ></v-text-field>
           </v-card-title>
           <v-divider></v-divider>
-          <v-card-text class="pa-4" style="min-height: 350px; max-height: 450px; overflow-y: auto;">
+          <v-card-text class="pa-4 flex-grow-1" style="max-height: 300px; overflow-y: auto;">
             <div v-if="isHistoryLoading" class="text-center py-10">
                 <v-progress-circular indeterminate color="primary"></v-progress-circular>
             </div>
@@ -216,7 +238,7 @@
                 </v-timeline-item>
             </v-timeline>
              <div v-else class="text-center text-grey-darken-1 pa-10">
-                暂无历史记录
+                {{ t('dataCenter.history') }}
             </div>
           </v-card-text>
         </v-card>
@@ -232,9 +254,13 @@ import aMapLoaderInstance from "@/utils/amap";
 import { getCityWeather } from "@/utils/weather";
 import { getHerbDistribution, type HerbDistribution } from "@/api/biomedicine";
 import axios from 'axios';
+import { Icon } from "@iconify/vue";
 
 import { useChart, RenderType, ThemeType } from "@/plugins/echarts";
 import type { EChartsOption } from "echarts";
+
+import { useI18n } from 'vue-i18n';
+const { t } = useI18n();
 
 interface HistoryItem {
   id: number;
@@ -565,5 +591,46 @@ onUnmounted(() => {
 }
 .text-no-wrap {
     white-space: nowrap;
+}
+
+.comparison-image-card {
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  position: relative;
+  padding: 0; /* 移除内边距，确保内容撑满 */
+}
+
+.image-wrapper {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.comparison-image {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+.placeholder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.02); /* 可选：添加轻微背景色 */
+}
+
+.comparison-image-card:hover {
+  box-shadow: 0 0 0 2px var(--v-theme-primary);
+  transform: scale(1.02);
 }
 </style>
